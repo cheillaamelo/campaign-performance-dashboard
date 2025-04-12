@@ -1,54 +1,83 @@
-# React + TypeScript + Vite
+# 📈 Dashboard de Campanhas
+Este projeto é um dashboard simples de campanhas de marketing digitais desenvolvido com React e TypeScript. Ele exibe cards com informações importantes de performance das campanhas como CTR, conversões e custo por conversão. Os dados são simulados com uma API mock.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🛠️ Tecnologias Utilizadas
+- React
 
-Currently, two official plugins are available:
+- TypeScript
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Tailwind CSS (para estilização)
 
-## Expanding the ESLint configuration
+- API Mock (simulação com setTimeout)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📁 Estrutura do Projeto
+```
+src/
+├── api/
+│   └── mock.ts              # Simulação de chamada à API
+├── components/
+│   └── CampaignCard.tsx     # Componente visual de cada campanha
+├── types/
+│   └── Campaign.ts          # Tipagem TypeScript para campanhas
+└── App.tsx                  # Página principal com filtro, loading e erro
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🔍 Funcionalidades
+- ✅ Exibição de campanhas com:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+    - Nome e plataforma
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+    - CTR (Click Through Rate)
+
+    - Total de conversões
+
+    - Custo por conversão
+
+- ✅ Filtros por plataforma:
+
+    - Todas
+
+    - Google Ads
+
+    - Meta Ads
+
+- ✅ Estados de carregamento e erro
+
+
+
+## ▶️ Como Rodar o Projeto
+Clone o repositório:
+
 ```
+git clone https://github.com/seu-usuario/nome-do-repo.git
+cd nome-do-repo
+```
+
+1- Instale as dependências:
+
+```
+npm install
+```
+
+2- Inicie o projeto:
+
+```
+npm run dev
+```
+
+## 🧪 Preview
+Veja como o componente de campanha é exibido:
+```
+📈 Campanha Dia das Mães
+🔁 Conversões: 120
+📊 CTR: 5.00%
+💰 Custo por conversão: R$ 4.17
+```
+
+## 📌 Observações
+- Este projeto utiliza dados estáticos simulados. Integrações com APIs reais podem ser feitas substituindo fetchCampaigns no arquivo mock.ts.
+
+- É um ótimo ponto de partida para projetos mais robustos com dashboards dinâmicos.
+
+## 📄 Licença
+Este projeto está sob a licença MIT.
