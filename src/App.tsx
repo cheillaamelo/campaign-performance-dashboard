@@ -1,35 +1,74 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import { Campaign } from "./types/Campaign";
+import { fetchCampaigns } from "./api/mock";
+import CampaignCard from "./components/CampaignCard";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [filter, setFilter] = useState<"All" | "Google Ads" | "Meta Ads">(
+    "All"
+  );
+
+  useEffect(() => {
+    fetchCampaigns()
+      .then((data) => {
+        setCampaigns(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError(true);
+        setLoading(false);
+      });
+  }, []);
+
+  const filtered = campaigns.filter((c) =>
+    filter === "All" ? true : c.platform === filter
+  );
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="max-w-4xl mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">📈 Dashboard de Campanhas</h1>
+
+      <div className="mb-4 space-x-2">
+        <button
+          className={`px-3 py-1 rounded ${
+            filter === "All" ? "bg-blue-600 text-white" : "bg-gray-200"
+          }`}
+          onClick={() => setFilter("All")}
+        >
+          Todas
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <button
+          className={`px-3 py-1 rounded ${
+            filter === "Google Ads" ? "bg-blue-600 text-white" : "bg-gray-200"
+          }`}
+          onClick={() => setFilter("Google Ads")}
+        >
+          Google Ads
+        </button>
+        <button
+          className={`px-3 py-1 rounded ${
+            filter === "Meta Ads" ? "bg-blue-600 text-white" : "bg-gray-200"
+          }`}
+          onClick={() => setFilter("Meta Ads")}
+        >
+          Meta Ads
+        </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+      {loading && <p>Carregando campanhas...</p>}
+      {error && <p className="text-red-500">Erro ao carregar campanhas.</p>}
+      {!loading && !error && (
+        <div className="grid gap-4 sm:grid-cols-2">
+          {filtered.map((campaign) => (
+            <CampaignCard key={campaign.id} campaign={campaign} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;
